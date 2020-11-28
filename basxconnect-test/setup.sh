@@ -13,13 +13,19 @@ virtualenv -p /usr/bin/python3 .venv || exit -1
 source .venv/bin/activate
 pip install requests lxml
 
+# $HOSTNAME will be set by calling script
+if [ -z "$HOSTNAME ]; then
+  echo "missing environment variable HOSTNAME"
+  exit -1
+fi
+
 cat > test.py <<FINISH
 import requests
 from lxml import html
 
 User="admin"
 Pwd="CHANGEME"
-url="https://build04lxc.lbs.solidcharity.com/"
+url="https://$HOSTNAME/"
 
 S = requests.Session()
 
