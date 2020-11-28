@@ -7,10 +7,6 @@ fi
 
 curl https://get.basxconnect.solidcharity.com | bash -s prod --branch=$branch --behindsslproxy=true || exit -1
 
-# we are contacting the site through http://localhost but still want to use the CSRF cookie
-echo "CSRF_COOKIE_SECURE = False" >> /home/django/basxconnect/basxconnect/settings/production.py
-systemctl restart basxconnect
-
 mkdir -p /tmp/test
 cd /tmp/test
 virtualenv -p /usr/bin/python3 .venv || exit -1
