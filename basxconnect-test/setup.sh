@@ -15,14 +15,15 @@ mkdir -p /tmp/test
 cd /tmp/test
 virtualenv -p /usr/bin/python3 .venv || exit -1
 source .venv/bin/activate
-pip install requests
+pip install requests lxml
 
 cat > test.py <<FINISH
 import requests
+from lxml import html
 
 User="admin"
 Pwd="CHANGEME"
-url="http://localhost:8000"
+url="https://build04lxc.lbs.solidcharity.com/"
 
 S = requests.Session()
 
@@ -30,8 +31,11 @@ S = requests.Session()
 r1 = S.get(url=url + "/accounts/login/?next=/")
 csrftoken = S.cookies['csrftoken']
 
+tree = html.fromstring(r1.content)
+token = tree.xpath('//input[@name="csrfmiddlewaretoken"]')[0].attrib['value']
+
 PARAMS = {
-    'csrfmiddlewaretoken':csrftoken,
+    'csrfmiddlewaretoken':token,
     'username':User,
     'password':Pwd,
 }
