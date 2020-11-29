@@ -13,11 +13,14 @@ virtualenv -p /usr/bin/python3 .venv || exit -1
 source .venv/bin/activate
 pip install requests lxml
 
-# $HOSTNAME will be set by calling script
-if [ -z "$HOSTNAME" ]; then
-  echo "missing environment variable HOSTNAME"
+# $DOMAINNAME will be set by calling script
+if [ -z "$DOMAINNAME" ]; then
+  echo "missing environment variable DOMAINNAME"
   exit -1
 fi
+
+sed -i "s/\"localhost\"/\"localhost\",\"$DOMAINNAME\"/g" /home/django/basxconnect/basxconnect/settings/production.py
+systemctl restart basxconnect
 
 cat > test.py <<FINISH
 import requests
@@ -25,7 +28,7 @@ from lxml import html
 
 User="admin"
 Pwd="CHANGEME"
-url="https://$HOSTNAME/"
+url="https://$DOMAINNAME/"
 
 S = requests.Session()
 
