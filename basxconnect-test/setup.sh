@@ -14,7 +14,7 @@ source .venv/bin/activate
 pip install requests lxml
 
 # $HOSTNAME will be set by calling script
-if [ -z "$HOSTNAME ]; then
+if [ -z "$HOSTNAME" ]; then
   echo "missing environment variable HOSTNAME"
   exit -1
 fi
