@@ -35,7 +35,7 @@ url="https://$DOMAINNAME/"
 S = requests.Session()
 
 # Retrieve login token first
-r1 = S.get(url=url + "/accounts/login/?next=/")
+r1 = S.get(url=url + "/bread/login?next=/")
 csrftoken = S.cookies['csrftoken']
 
 tree = html.fromstring(r1.content)
@@ -44,9 +44,19 @@ token = tree.xpath('//input[@name="csrfmiddlewaretoken"]')[0].attrib['value']
 PARAMS = {
     'csrfmiddlewaretoken':token,
     'username':User,
+    'password':Pwd+'Wrong',
+}
+r2 = S.post(url + "/bread/login?next=/", data=PARAMS, cookies=r1.cookies)
+if not "Please enter a correct username and password" in r2.text:
+  print("Does not complain about wrong password")
+  exit(-1)
+
+PARAMS = {
+    'csrfmiddlewaretoken':token,
+    'username':User,
     'password':Pwd,
 }
-r2 = S.post(url + "/accounts/login/?next=/", data=PARAMS, cookies=r1.cookies)
+r2 = S.post(url + "/bread/login?next=/", data=PARAMS, cookies=r1.cookies)
 if "Please enter a correct username and password" in r2.text:
   print("wrong username or password")
   exit(-1)
