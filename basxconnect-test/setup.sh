@@ -9,7 +9,7 @@ curl https://get.basxconnect.solidcharity.com | bash -s prod --branch=$branch --
 
 mkdir -p /tmp/test
 cd /tmp/test
-virtualenv -p /usr/bin/python3 .venv || exit -1
+python3 -m venv .venv || exit -1
 source .venv/bin/activate
 pip install requests lxml
 
