@@ -19,7 +19,7 @@ if [ -z "$DOMAINNAME" ]; then
   exit -1
 fi
 
-sed -i "s/\"localhost\"/\"localhost\",\"$DOMAINNAME\"/g" /home/django/basxconnect/basxconnect/settings/production.py
+sed -i "s/\"localhost\"/\"localhost\",\"$DOMAINNAME\"/g" /home/django/basxconnect_demo/basxconnect_demo/settings/production.py
 systemctl restart basxconnect
 
 cat > test.py <<FINISH
