@@ -10,6 +10,11 @@ curl https://get.basxconnect.solidcharity.com | bash -s devenv --branch=$branch 
 # we need psmisc for killall
 apt-get install psmisc || dnf install psmisc || exit -1
 
+function fail {
+  killall python
+  exit -1
+}
+
 cd /home/django/basxconnect_demo
 source .venv/bin/activate
 python manage.py runserver 127.0.0.1:8080 &
@@ -61,6 +66,6 @@ if not '/core/person/browse' in r2.text:
   exit(-1)
 FINISH
 
-python3 test.py || exit -1
+python3 test.py || fail 
 
 killall python || exit -1
