@@ -31,7 +31,7 @@ from lxml import html
 
 User="admin"
 Pwd="CHANGEME"
-url="http://localhost:8080/"
+url="http://localhost:8080"
 
 S = requests.Session()
 
