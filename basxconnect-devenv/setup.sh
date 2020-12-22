@@ -7,6 +7,9 @@ fi
 
 curl https://get.basxconnect.solidcharity.com | bash -s devenv --branch=$branch --behindsslproxy=true || exit -1
 
+# we need psmisc for killall
+apt-get install psmisc || dnf install psmisc || exit -1
+
 cd /home/django/basxconnect_demo
 source .venv/bin/activate
 python manage.py runserver 127.0.0.1:8080 &
@@ -59,3 +62,5 @@ if not '/core/person/browse' in r2.text:
 FINISH
 
 python3 test.py || exit -1
+
+killall python || exit -1
