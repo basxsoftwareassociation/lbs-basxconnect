@@ -7,22 +7,15 @@ fi
 
 curl https://get.basxconnect.solidcharity.com | bash -s devenv --branch=$branch --behindsslproxy=true || exit -1
 
+cd /home/django/basxconnect_demo
+source .venv/bin/activate
+python manage.py runserver 127.0.0.1:8080 &
+
 mkdir -p /tmp/test
 cd /tmp/test
 python3 -m venv .venv || exit -1
 source .venv/bin/activate
 pip install requests lxml
-
-# $DOMAINNAME will be set by calling script
-if [ -z "$DOMAINNAME" ]; then
-  echo "missing environment variable DOMAINNAME"
-  exit -1
-fi
-
-settings=/home/django/basxconnect_demo/basxconnect_demo/settings/local.py
-echo "ALLOWED_HOSTS = ['localhost','$DOMAINNAME']" >> $settings
-echo "SECURE_SSL_REDIRECT = False" >> $settings
-systemctl restart basxconnect
 
 cat > test.py <<FINISH
 import requests
@@ -30,7 +23,7 @@ from lxml import html
 
 User="admin"
 Pwd="CHANGEME"
-url="https://$DOMAINNAME/"
+url="http://localhost:8080/"
 
 S = requests.Session()
 
