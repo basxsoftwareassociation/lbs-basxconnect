@@ -15,9 +15,8 @@ function fail {
   exit -1
 }
 
-cd /home/django/basxconnect_demo
-source .venv/bin/activate
-python manage.py runserver 127.0.0.1:8080 &
+# run as user django
+su - django -c "cd /home/django/basxconnect_demo && source .venv/bin/activate && python manage.py runserver 127.0.0.1:8080 &"
 
 mkdir -p /tmp/test
 cd /tmp/test
@@ -66,6 +65,6 @@ if not '/core/person/browse' in r2.text:
   exit(-1)
 FINISH
 
-python3 test.py || fail 
+python3 test.py || fail
 
 killall python || exit -1
