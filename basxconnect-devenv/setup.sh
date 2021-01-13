@@ -11,13 +11,14 @@ curl https://get.basxconnect.solidcharity.com | bash -s devenv --branch=$branch 
 apt-get install psmisc || dnf install psmisc || exit -1
 
 function fail {
+  echo "failure: it does not work"
   killall python
   exit -1
 }
 
 # run as user django
-su - django -c "cd /home/django/basxconnect_demo && source .venv/bin/activate && python manage.py runserver 127.0.0.1:8080 &"
-sleep 10 # wait for the server to start
+su - django -c "cd /home/django/basxconnect_demo && source .venv/bin/activate && python manage.py runserver 127.0.0.1:8080 > /dev/null 2>&1 &"
+sleep 5 # wait for the server to start
 
 mkdir -p /home/django/test
 cd /home/django/test
