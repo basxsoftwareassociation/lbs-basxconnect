@@ -17,9 +17,10 @@ function fail {
 
 # run as user django
 su - django -c "cd /home/django/basxconnect_demo && source .venv/bin/activate && python manage.py runserver 127.0.0.1:8080 &"
+sleep 10 # wait for the server to start
 
-mkdir -p /tmp/test
-cd /tmp/test
+mkdir -p /home/django/test
+cd /home/django/test
 python3 -m venv .venv || exit -1
 source .venv/bin/activate
 pip install requests lxml
