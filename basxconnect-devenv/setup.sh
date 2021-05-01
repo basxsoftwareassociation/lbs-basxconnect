@@ -33,11 +33,12 @@ from lxml import html
 User="admin"
 Pwd="CHANGEME"
 url="http://localhost:8080"
+loginpath="/bread/accounts/login/?next=/"
 
 S = requests.Session()
 
 # Retrieve login token first
-r1 = S.get(url=url + "/bread/login?next=/")
+r1 = S.get(url=url + loginpath)
 csrftoken = S.cookies['csrftoken']
 
 tree = html.fromstring(r1.content)
@@ -48,7 +49,7 @@ PARAMS = {
     'username':User,
     'password':Pwd+'Wrong',
 }
-r2 = S.post(url + "/bread/login?next=/", data=PARAMS, cookies=r1.cookies)
+r2 = S.post(url + loginpath, data=PARAMS, cookies=r1.cookies)
 if not "Please enter a correct username and password" in r2.text:
   print("Does not complain about wrong password")
   exit(-1)
@@ -58,7 +59,7 @@ PARAMS = {
     'username':User,
     'password':Pwd,
 }
-r2 = S.post(url + "/bread/login?next=/", data=PARAMS, cookies=r1.cookies)
+r2 = S.post(url + loginpath, data=PARAMS, cookies=r1.cookies)
 if "Please enter a correct username and password" in r2.text:
   print("wrong username or password")
   exit(-1)
