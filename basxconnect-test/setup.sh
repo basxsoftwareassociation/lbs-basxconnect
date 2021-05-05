@@ -19,7 +19,7 @@ if [ -z "$DOMAINNAME" ]; then
   exit -1
 fi
 
-settings=/home/django/basxconnect_demo/basxconnect_demo/settings/local.py
+settings=/home/django/basxconnect_demo/basxconnect_demo/settings/production.py
 echo "ALLOWED_HOSTS = ['localhost','$DOMAINNAME']" >> $settings
 echo "SECURE_SSL_REDIRECT = False" >> $settings
 systemctl restart basxconnect
