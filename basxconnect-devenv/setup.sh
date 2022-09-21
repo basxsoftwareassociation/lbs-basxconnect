@@ -33,7 +33,7 @@ from lxml import html
 User="admin"
 Pwd="CHANGEME"
 url="http://localhost:8080"
-loginpath="/bread/accounts/login/?next=/"
+loginpath="/basxbread/accounts/login/?next=/"
 
 S = requests.Session()
 
@@ -63,7 +63,7 @@ r2 = S.post(url + loginpath, data=PARAMS, cookies=r1.cookies)
 if "Please enter a correct username and password" in r2.text:
   print("wrong username or password")
   exit(-1)
-if not '/core/person/browse' in r2.text:
+if not '/basxconnect/core/person/browse' in r2.text:
   print("cannot find link to browsing persons")
   exit(-1)
 FINISH
