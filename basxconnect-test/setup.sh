@@ -18,6 +18,7 @@ if [ -z "$DOMAINNAME" ]; then
   echo "missing environment variable DOMAINNAME"
   exit -1
 fi
+echo "We are running the test on https://$DOMAINNAME/"
 
 settings=/home/django/basxconnect_demo/basxconnect_demo/settings/production.py
 echo "ALLOWED_HOSTS = ['localhost','$DOMAINNAME']" >> $settings
